@@ -1,14 +1,3 @@
-def merge_k_lists(arr):
-    if len(arr) <= 1:
-        return arr
-
-    mid = len(arr) // 2
-    left_half = arr[:mid]
-    right_half = arr[mid:]
-
-    return merge(merge_k_lists(left_half), merge_k_lists(right_half))
-
-
 def merge(left, right):
     merged = []
     left_index = 0
@@ -36,6 +25,21 @@ def merge(left, right):
     return merged
 
 
-lists = [[1, 4, 5], [1, 3, 4], [2, 6]]
-merged_list = merge_k_lists(lists)
-print("Відсортований список:", merged_list)
+def merge_k_lists(k_lists):
+    if not k_lists:
+        return []
+
+    # Починаємо з 1-го списку, як left
+    merged = k_lists[0]
+
+    # Ітерація всіх списків з k_lists для подання як right
+    for i in range(1, len(k_lists)):
+        merged = merge(merged, k_lists[i])
+        print(f"After merging {i + 1} lists : {merged}")
+
+    return merged
+
+
+lists = [[1, 4, 5], [1, 3, 4], [2, 6], [3, 5, 8], [0]]
+result = merge_k_lists(lists)
+print("Final merged list:", result)
